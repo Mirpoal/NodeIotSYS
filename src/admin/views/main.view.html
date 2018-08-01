@@ -1,0 +1,32 @@
+<nd-navigation></nd-navigation>
+<article ui-view class="page view clearfix">
+  <div class="page-header clearfix">
+    <ol class="heading">
+      <li><a ui-sref="main">设备管理</a></li>
+    </ol>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body table-responsive">
+      <table class="table table-hover">
+        <thead class="text-center">
+        <tr>
+          <th>设备名</th>
+          <th>状态</th>
+          <th>设备地址</th>
+          <th>连接方式</th>
+          <th>连接协议</th>
+        </tr>
+        </thead>
+        <tbody class="text-center">
+        <tr ng-repeat="device in devicesList">
+          <td>{{device.sensorname}}</td>
+          <td>{{device.statue}}</td>
+          <td>{{device.mac}}</td>
+          <td>{{device.link}}</td>
+          <td>{{device.agree}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,109 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+  background: #32C2CD !important;
+
+}
+
+.text-center {
+    text-align:center;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+margin-top: 7px;
+margin-bottom: -5px;
+}
+h2 {
+    color: #000;
+}
+h4 {
+    padding-top:10px;
+}
+
+p {
+    font-size:16px;
+    line-height:25px;
+    padding-top:20px;
+}
+
+.page-header {
+padding-bottom: 9px;
+margin: 10px 0 20px;
+border-bottom: 1px solid transparent;
+text-align: left;}
+.panel-left{
+width: 100px;
+height: 100px;
+background: #32D088;
+border: 2px solid white;
+border-radius: 100%;
+overflow: hidden;
+margin: 12px;}
+
+.panel-left .fa-5x {
+font-size: 3em;
+color: rgba(255, 255, 255, 0.69);
+padding: 29px 0;
+margin-bottom:30px;
+}
+.panel-right{
+height: 124px;
+background: transparent;
+margin-bottom: 0;
+color: #2B2E33;
+float: left;text-align: left;padding-left: 20px;}
+.panel-right h3{
+font-size: 40px;
+padding: 18px 10px 13px 0;
+color: #8A8A8A;
+}
+.panel-back {
+    background-color:#fff;
+
+}
+.panel-default {
+  border-color: #ECECEC;
+}
+
+.panel-primary{
+display:inline-block;
+margin-bottom: 30px;
+width:100%;
+}
+.green {
+color: #fff;
+}
+ .blue {
+background-color: #32CEE4;
+color: #fff
+}
+  .red {
+background-color: #FB6E51;
+color:#fff;
+}
+  .brown {
+background-color: #F5B252;
+color:#fff;
+} 
+ .back-footer-red {
+background-color: #F0433D;
+color:#fff;
+border-top: 0px solid #fff;
+}
+
+.easypiechart-panel {
+	text-align: center;
+	padding: 1px 0;
+	margin-bottom: 20px;
+}
+
+.btn-circle {
+width: 50px;
+height: 50px;
+padding: 6px 0;
+text-align: center;
+font-size: 8px;
+
+}
+
+
+

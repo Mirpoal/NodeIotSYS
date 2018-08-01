@@ -1,0 +1,111 @@
+<%- include public/header.ejs%>
+<%- include public/navbar.ejs%>
+
+<body >
+  <p class="text-center text-center" style="font-size: 30px">智能宿舍（物联网数据平台）</p>
+  <p class="text-center text-center" >GitHub git: <a target="_blank">https://github.com/Mirpoal/dormwork.git</a></p>
+  <h2>1、Instructions</h2>
+  <ol style="font-size: 15px">
+    <li >烧写程序接线
+      <ul>
+        <li>ESP8266与CH340接线<br>
+          <img src="/views/admin/img/esp8266.PNG" alt="">
+        </li>
+        <li>ESP8266 VCC   -&gt; CH340 3.3V</li>
+        <li>ESP8266 GND   -&gt; CH340 GND</li>
+        <li>ESP8266 TX    -&gt; CH340 RX</li>
+        <li>ESP8266 RX    -&gt; CH340 TX</li>
+        <li>ESP8266 GPIO0 -&gt; CH340 GND</li>
+        <li>ESP8266 CH_PD -&gt; CH340 3.3V</li>
+        <li>若一直显示正在上传，ESP8266 RST接地即可</li>
+      </ul>
+    </li>
+    <li>传感节点
+      <ul>
+        <li>IOT ESP8266 MCU获取通道</li>
+        <li>NodeMCU获取通道</li>
+        <li>(推荐使用现有的IOT MCU)</li>
+      </ul>
+    </li>
+    <li>硬件扩展新的传感器
+      <ul>
+        <li>按照各个传感器的通信规则获取传感数据</li>
+        <li>IOTMCU烧写程序后插上ESP8266直接可用</li>
+        <li>若是第三方平台如51单片机、Arduino等，采用RS485通信，将数据发到串口TX端，TX与ESP8266的RX相连即可</li>
+      </ul>
+    </li>
+    <li>系统使用
+      <ul>
+        <li>申请服务器的MCU会在MAC管理栏目下出现mac和Pwd</li>
+        <li>认证设备在密钥管理栏目下，添加相应的mac和Pwd，成功后在设备管理下出现设备信息</li>
+        <li>后台用户可自己管理</li>
+      </ul>
+    </li>
+  </ol>
+  <h2>2、Work Server</h2>
+  <ul style="font-size: 15px">
+    <li>HTTP Server
+      <ul>
+        <li>接收來自传感节点的HTTP封包
+          <ul>
+            <li>用于接收趋势数据</li>
+            <li>读取的数据量大</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>CoAP Server
+      <ul>
+        <li>接收來自传感节点的CoAP封包
+          <ul>
+            <li>用于控制设备</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>MQTT Server
+      <ul>
+        <li>接收來自传感节点的MQTT封包
+          <ul>
+            <li>用于接收实时数据</li>
+            <li>也可用于读取少量的服务器数据，比如RFID门禁数据</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li>Web API Server
+      <ul>
+        <li>PUT &nbsp;&nbsp; /serverIP/api/sensor  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 上传HTTP封装数据</li>
+        <li>PUT &nbsp;&nbsp; /serverIP/api/sensor/real  &nbsp;&nbsp; 上传MQTT封装数据</li>
+        <li>PUT &nbsp;&nbsp; /serverIP/api/controller  &nbsp;&nbsp;&nbsp;&nbsp;  上传CoAP封装数据</li>
+      </ul>
+    </li>
+  </ul>
+  <h2 >3、Reference</h2><ul>
+    <li>
+      <p>Arduino Dev.</p>
+      <ul>
+        <li>
+          <p>HTTP</p>
+          <ul>
+            <li><a href="https://www.dfrobot.com/wiki/index.php/DFRobot_LM35_Linear_Temperature_Sensor_(SKU:DFR0023)" target="_blank">Temperature Seneor</a></li>
+          </ul>
+        </li>
+        <li>
+          <p>CoAP</p>
+          <ul>
+            <li><a href="https://github.com/hirotakaster/CoAP-simple-library" target="_blank">Simple CoAP Lib. for Arduino</a></li>
+          </ul>
+        </li>
+        <li>
+          <p>MQTT</p>
+          <ul>
+            <li><a href="https://www.dfrobot.com/wiki/index.php/DFRobot_LM35_Linear_Temperature_Sensor_(SKU:DFR0023)" target="_blank">Temperature Seneor</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</body>
+
+<%- include public/layout-footer.ejs%>

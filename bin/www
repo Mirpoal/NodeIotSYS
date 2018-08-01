@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+var app = require('../app');
+var async = require('async');
+var http = require('http');
+var database = require('../lib/database.lib');
+var port = require('../lib/port.lib.js')();
+var installService = require('../core/services/install.service');
+var mqttserver = require('../lib/mqttservernet.lib');
+var coapserver = require('../lib/coapserver.lib');
+
+app.set('port', port);
+
+async.waterfall([
+    function (callback) {
+        installService.status(function (err, hasInstall) {
+            if (err) return callback(err);
+            callback(null, hasInstall);
+        });
+    },
+    function (hasInstall, callback) {
+        if (!hasInstall) {
+            return callback();
+        }
+        async.series([
+            database.connect
+        ],callback);
+    }
+],function (err) {
+    if (err) throw err;
+
+    //创建 HTTP 服务器
+    var server = http.createServer(app);
+
+    //监听端口
+    server.listen(port);
+
+    server.on('error', function (error) {
+        if (error.syscall !== 'listen') throw error;
+
+        var bind = typeof port === 'string' ? 'pipe ' + port : 'port ' + port;
+
+        // handle specific listen errors with friendly messages
+        switch (error.code) {
+            case 'EACCES':
+                process.exit(1);
+
+                break;
+            case 'EADDRINUSE':
+                process.exit(1);
+
+                break;
+            default:
+                throw error;
+        }
+    });
+
+    server.on('listening', function () {
+        var addr = server.address();
+
+        var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+
+        mqttserver.startMQTTserver();
+
+        coapserver.startCoAPserver();
+
+        console.log('http server listen on ' + bind);
+    });
+});

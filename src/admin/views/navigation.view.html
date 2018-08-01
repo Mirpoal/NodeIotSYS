@@ -1,0 +1,64 @@
+<!-- 注销模态 -->
+<div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="signOutModalTitle">警告</h4>
+			</div>
+			<div class="modal-body">
+				<h4 class="text-center">您确定要退出登录吗？</h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button ng-click="signOut()" type="button" class="btn btn-danger">退出</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<nav class="navigation">
+	<h4 class="siteInfo text-center">NodeIotSys</h4>
+	<div class="account">
+		当前管理:{{user.nickname}}<div data-toggle="modal" data-target="#signOutModal" class="sign-out"><i class="fa fa-sign-out"></i></div>
+	</div>
+	<ul class="list">
+		<li>
+			<a ui-sref="main" ui-sref-active-eq="active" class="item">
+				<i class="fa fa-star fa-fw"></i>
+				设备管理
+			</a>
+		</li>
+		<li>
+			<a ui-sref="main.developer" ui-sref-active="active" class="item">
+				<i class="fa fa-book fa-fw"></i>
+				密钥管理
+			</a>
+		</li>
+		<li>
+			<a ui-sref="main.mac" ui-sref-active="active" class="item">
+				<i class="fa fa-sticky-note fa-fw"></i>
+				MAC管理
+			</a>
+		</li>
+		<li>
+			<a ui-sref="main.account" ui-sref-active="active" class="item">
+				<i class="fa fa-cog fa-fw"></i>
+				帐号设置
+			</a>
+		</li>
+		<li>
+			<a ui-sref="main.adminUsers" ui-sref-active="active" class="item">
+				<i class="fa fa-cogs fa-fw"></i>
+				后台用户
+			</a>
+		</li>
+
+	</ul>
+	<div nd-notification ng-show="notificationShow" ng-class="'text-' + type" class="notification">
+		<i ng-if="type === 'success'" class="fa fa-check-circle fa-fw"></i>
+		<i ng-if="type === 'warning'" class="fa fa-warning fa-fw"></i>
+		<i ng-if="type === 'danger'" class="fa fa-times-circle fa-fw"></i>
+		{{message}}
+	</div>
+</nav>

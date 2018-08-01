@@ -1,0 +1,263 @@
+<%- include public/header.ejs%>
+<%- include public/navbar.ejs%>
+
+<div class="modal fade" id="addModel" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-welcome">添加新设备</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center text-info">设备信息</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="extendinfo" method="post" class="form-horizontal" action="/dashboard/extend" style="margin-top: 20px;">
+                            <div class="tab-content">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">MAC(物理地址)：</label>
+                                    <div class="col-lg-5">
+                                        <select class="form-control" name="mac">
+                                            <option value="">-- Select a exist mac --</option>
+                                            <% for(var i=0;i<maclist.length;i++) {%>
+                                                <option value=<%= maclist[i]%>> <%= maclist[i] %> </option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Auth(授权码)：</label>
+                                    <div class="col-lg-5">
+                                        <input type="password" class="form-control" name="auth" placeholder="请输入授权码" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">数据名：</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" class="form-control" name="dataname" placeholder="请输入数据名" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">数据单位：</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" class="form-control" name="unit" placeholder="请输入数据单位"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button  type="submit" id="extend" class="btn btn-info">确认</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addControllerModel" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-welcome">添加新设备</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center text-info">控制器</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="extendcontrollerinfo" method="post" class="form-horizontal" action="/dashboard/extend" style="margin-top: 20px;">
+                            <div class="tab-content">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">MAC(物理地址)：</label>
+                                    <div class="col-lg-5">
+                                        <select class="form-control" name="mac">
+                                            <option value="">-- Select a exist mac --</option>
+                                            <% for(var i=0;i<maclist.length;i++) {%>
+                                            <option value=<%= maclist[i]%>> <%= maclist[i] %> </option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">Auth(授权码)：</label>
+                                    <div class="col-lg-5">
+                                        <input type="password" class="form-control" name="auth" placeholder="请输入授权码" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button  class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button  type="submit" id="extendcontroller" class="btn btn-info">确认</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <ol style="list-style: none;padding: 0px;">
+        <li>
+            <div class="row">
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-green green">
+                        <div class="panel-left pull-left green">
+                            <h3 style="margin-top: 30%"><a>当前</a></h3>
+                        </div>
+                        <div class="panel-right">
+                            <h3 id="realtemp"></h3>
+                            <strong>温度</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-blue">
+                        <div class="panel-left pull-left blue">
+                            <h3 style="margin-top: 30%"><a>当前</a></h3>
+                        </div>
+                        <div class="panel-right">
+                            <h3 id="realhum"></h3>
+                            <strong>湿度</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-red">
+                        <div class="panel-left pull-left red">
+                            <h3 style="margin-top: 30%"><a>当前</a></h3>
+                        </div>
+                        <div class="panel-right">
+                            <h3 id="realpm"></h3>
+                            <strong>PM2.5(mg/m3)</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-brown">
+                        <div class="panel-left pull-left brown">
+                            <h3 style="margin-top: 30%"><a id="extendnow"></a></h3>
+                        </div>
+                        <div class="panel-right">
+                            <h3><a id="extendcava"></a></h3>
+                            <strong id="extendname"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ol>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    PM2.5 Chart
+                </div>
+                <div class="panel-body">
+                    <div id="pmchart" style="width: 100%;height: 450px"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    humiture Chart
+                </div>
+                <div class="panel-body">
+                    <div id="humichart" style="width: 100%;height: 450px"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-xs-6 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>照明控制</h4>
+                        <button id="button1" onclick="click1(lightmac)" class="btn btn-danger btn-circle btn-lg "></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>窗帘控制</h4>
+                        <button id="button2" onclick="click2(curtainsmac)" class="btn  btn-circle btn-lg "></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>红外设备</h4>
+                        <button id="button3"  onclick="click3(inframac)" class="btn btn-circle btn-lg "></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>系统扩展</h4>
+                        <button type="button" data-toggle="modal" data-target="#addControllerModel" class="btn btn-circle btn-lg ">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Power Chart
+                    </div>
+                    <div class="panel-body">
+                        <div id="powerchart" style="width: 100%;height: 300px"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        本月Power
+                    </div>
+                    <div class="panel-body">
+                        <div id="powerbar" style="width: 100%;height: 300px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var dht11mac = '<%= dht11mac%>';
+    var pmmac = '<%= pmmac%>';
+    var powermac = '<%= powermac%>';
+    var lightmac = '<%= light.mac %>';
+    var curtainsmac = '<%= curtains.mac %>';
+    var inframac = '<%= infra.mac %>';
+    var nowmonth = '<%= nowMonth %>';
+    var statue = '<%= extendstatue %>';
+    var extendreal = '<%= extendreal %>';
+    var extenddataname = '<%= extenddataname %>';
+    var extendunit = '<%= extendunit %>';
+
+</script>
+<script src="/views/admin/js/real-ajax.js"></script>
+<script src="/views/admin/js/button.js"></script>
+<script src="/views/admin/js/echart-ajax.js"></script>
+<script src="/views/admin/js/validator.js"></script>
+
+<%- include public/layout-footer.ejs%>
